@@ -1,29 +1,83 @@
 <f:view id="ajaxEcho" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core" 
-    xmlns:h="http://java.sun.com/jsf/html">
-    <h:head />
-    <h:body>
-        <h2>JSF 2 Portlet</h2>
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+    <h:head >
+		<script src="http://maps.google.com/maps/api/js?sensor=true" 
+				type="text/javascript">
+		</script> 
+	</h:head>
+	<h:body>
+		<h2>Testes gerais de JSF</h2>
 
-        <p>Simple ajax echo example.</p>
-        <h:form id="form1">
-         Output: <h:outputText id="out1" value="#{myBean.str}" />
-            <br />
-         Input: <h:inputText id="in1" autocomplete="off" value="#{myBean.str}">
-                <f:ajax render="out1" />
-            </h:inputText>
-            <br />
-            <!-- A no-op button, just to lose the focus from "in1" -->
-            <h:commandButton id="button1" value="Echo" type="button" />
-            <br />
-            <!-- Resets the string, refreshes the form, but not the page -->
-            <h:commandButton id="reset" value="reset" actionListener="#{myBean.reset}">
-                <f:ajax render="@form" />
-            </h:commandButton>
-            <!-- Reloads the page, doesn't reset the string -->
-            <h:commandButton id="reload" value="reload" />
-            <h:messages />
-        </h:form>
-    </h:body>
+		<h:form id="form1">
+			<p:growl autoUpdate="true" life="3000" />
+			
+			<p:panelGrid>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="inputLatitude">Latitude: </p:outputLabel>
+					</p:column>
+					<p:column>
+						<p:inputText id="inputLatitude" required="true" value="#{myBean.latitude}" />
+					</p:column>
+				</p:row>
+	    		
+	    		<p:row>
+					<p:column>
+		            	<p:outputLabel for="inputLongitude">Longitude: </p:outputLabel>
+					</p:column>
+					<p:column>
+		            	<p:inputText id="inputLongitude" required="true" value="#{myBean.longitude}" />
+					</p:column>
+	    		</p:row>        
+	            
+	            <p:row>
+					<p:column>
+		            	<p:commandButton action="#{myBean.adicionaMarcacao()}" value="Marcar" update="@form"/>
+					</p:column>
+					<p:column>
+		            	<p:commandButton action="#{myBean.enderecoDeCasa()}" value="Minha Casa" update="@form"/>
+					</p:column>
+	            </p:row>
+	            
+	            <p:row>
+					<p:column colspan="2">
+			            <p:gmap center="-22.820492, -47.265501" 
+			                    zoom="15" 
+			                    type="roadmap" 
+			                    style="width:600px;height:400px"
+			                    onPointClick="handlePointClick(event);"
+			                    id="gmapa"
+			                    model="#{myBean.simpleModel}"
+			                    widgetVar="mapa">
+						</p:gmap>
+					</p:column>	            
+	            </p:row>
+			</p:panelGrid>
+			
+			<h:inputHidden id="inputHiddenLatitude" value="#{myBean.latitude}" />
+			<h:inputHidden id="inputHiddenLongitude" value="#{myBean.longitude}" />
+		</h:form>
+		
+		<script type="text/javascript">
+			var currentMarker = null;
+
+			
+			function handlePointClick(event) {
+				console.log("Latitude:" + event.latLng.lat() + "\nLongitude: " + event.latLng.lng());
+// 				if(currentMarker === null) {
+					document.getElementById("form1:inputHiddenLatitude").value = event.latLng.lat();
+					document.getElementById("form1:inputHiddenLongitude").value = event.latLng.lng();
+
+					currentMarker = new google.maps.Marker({
+						position : new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
+					});
+
+					mapa.addOverlay(currentMarker);
+// 				}	
+			}
+		</script>
+	</h:body>
 </f:view>
