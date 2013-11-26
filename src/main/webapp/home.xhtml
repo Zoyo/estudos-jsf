@@ -14,7 +14,7 @@
 		<h:form id="form1">
 			<p:growl autoUpdate="true" life="3000" />
 			
-			<p:panelGrid>
+			<p:panelGrid id="gridGeral">
 				<p:row>
 					<p:column>
 						<p:outputLabel for="inputLatitude">Latitude: </p:outputLabel>
@@ -35,7 +35,7 @@
 	            
 	            <p:row>
 					<p:column>
-		            	<p:commandButton action="#{myBean.adicionaMarcacao()}" value="Marcar" update="@form"/>
+		            	<p:commandButton action="#{myBean.adicionarMarcacao()}" value="Marcar" update="@form"/>
 					</p:column>
 					<p:column>
 		            	<p:commandButton action="#{myBean.enderecoDeCasa()}" value="Minha Casa" update="@form"/>
@@ -45,39 +45,49 @@
 	            <p:row>
 					<p:column colspan="2">
 			            <p:gmap center="-22.820492, -47.265501" 
-			                    zoom="15" 
 			                    type="roadmap" 
 			                    style="width:600px;height:400px"
-			                    onPointClick="handlePointClick(event);"
 			                    id="gmapa"
 			                    model="#{myBean.simpleModel}"
 			                    widgetVar="mapa">
+			                    
+								<p:ajax event="overlaySelect" listener="#{myBean.apagarMarcacao}" update="gmapa" />
+								<p:ajax event="pointSelect" listener="#{myBean.capturarCoordenada}" update="gridGeral"/>
 						</p:gmap>
 					</p:column>	            
 	            </p:row>
+	            
+	            <p:row>
+	            	<p:column colspan="2">
+	            		<p:commandButton action="#{myBean.limparMapa()}" value="Remover Marcações" update="gmapa"/>
+	            	</p:column>
+	            </p:row>
 			</p:panelGrid>
 			
-			<h:inputHidden id="inputHiddenLatitude" value="#{myBean.latitude}" />
-			<h:inputHidden id="inputHiddenLongitude" value="#{myBean.longitude}" />
+			<p:contextMenu id="contextMenu">
+				<p:menuitem value="Excluir"/>
+				<p:menuitem value="Mostrar 10Km de Raio" />
+			</p:contextMenu>			
 		</h:form>
 		
 		<script type="text/javascript">
-			var currentMarker = null;
-
+			var xPos = 0;
+			var yPos = 0;
+			jQuery(document).ready(function(){
+			    $(document).mousemove(function(e){
+			        xPos = e.pageX;
+			        yPos = e.pageY;
+			    }); 
+			    
+				var mapComponent = mapa.getMap();
+				google.maps.event.addListener(mapComponent, 'right_click', function(mouseEvent) {
+				    $(PrimeFaces.escapeClientId('form1:contextMenu')).css({
+				        top: yPos+'px',
+				        left: xPos+'px'                        
+				    }).show();
+				});		
+			});
 			
-			function handlePointClick(event) {
-				console.log("Latitude:" + event.latLng.lat() + "\nLongitude: " + event.latLng.lng());
-// 				if(currentMarker === null) {
-					document.getElementById("form1:inputHiddenLatitude").value = event.latLng.lat();
-					document.getElementById("form1:inputHiddenLongitude").value = event.latLng.lng();
-
-					currentMarker = new google.maps.Marker({
-						position : new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
-					});
-
-					mapa.addOverlay(currentMarker);
-// 				}	
-			}
 		</script>
 	</h:body>
 </f:view>

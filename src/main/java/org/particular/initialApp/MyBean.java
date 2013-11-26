@@ -6,6 +6,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -56,10 +58,25 @@ public class MyBean implements Serializable {
 		this.longitude = longitude;
 	}
     
-    public void adicionaMarcacao() {
+    public void adicionarMarcacao() {
     	LatLng coordenada = new LatLng(latitude, longitude);
     	
     	simpleModel.addOverlay(new Marker(coordenada, "Coordenada Informada"));
+    }
+    
+    public void apagarMarcacao(OverlaySelectEvent event) {
+    	Marker overlay = (Marker) event.getOverlay();
+    	
+    	simpleModel.getMarkers().remove(overlay);
+    }
+    
+    public void capturarCoordenada(PointSelectEvent event) {
+    	latitude = event.getLatLng().getLat();
+    	longitude = event.getLatLng().getLng();
+    }
+    
+    public void limparMapa() {
+    	simpleModel = new DefaultMapModel();
     }
     
     public void enderecoDeCasa() {
