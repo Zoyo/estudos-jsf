@@ -51,8 +51,15 @@
 			                    model="#{myBean.simpleModel}"
 			                    widgetVar="mapa">
 			                    
-								<p:ajax event="overlaySelect" listener="#{myBean.apagarMarcacao}" update="gmapa" />
+								<p:ajax event="overlaySelect" listener="#{myBean.onClickNoMarcador}" />
 								<p:ajax event="pointSelect" listener="#{myBean.capturarCoordenada}" update="gridGeral"/>
+								
+								<p:gmapInfoWindow rendered="#{myBean.overlayEhMarcador()}">
+									<p:panelGrid columns="1">
+										<p:commandButton value="Mostrar 10km de Raio" action="#{myBean.adicionaCirculo()}" update="gmapa"/>
+										<p:commandButton value="Excluir" action="#{myBean.excluirMarcador()}" update="gmapa"/>
+									</p:panelGrid>
+								</p:gmapInfoWindow>
 						</p:gmap>
 					</p:column>	            
 	            </p:row>
@@ -63,31 +70,6 @@
 	            	</p:column>
 	            </p:row>
 			</p:panelGrid>
-			
-			<p:contextMenu id="contextMenu">
-				<p:menuitem value="Excluir"/>
-				<p:menuitem value="Mostrar 10Km de Raio" />
-			</p:contextMenu>			
 		</h:form>
-		
-		<script type="text/javascript">
-			var xPos = 0;
-			var yPos = 0;
-			jQuery(document).ready(function(){
-			    $(document).mousemove(function(e){
-			        xPos = e.pageX;
-			        yPos = e.pageY;
-			    }); 
-			    
-				var mapComponent = mapa.getMap();
-				google.maps.event.addListener(mapComponent, 'right_click', function(mouseEvent) {
-				    $(PrimeFaces.escapeClientId('form1:contextMenu')).css({
-				        top: yPos+'px',
-				        left: xPos+'px'                        
-				    }).show();
-				});		
-			});
-			
-		</script>
 	</h:body>
 </f:view>
