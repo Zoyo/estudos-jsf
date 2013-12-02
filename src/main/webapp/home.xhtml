@@ -14,8 +14,8 @@
 
 		<p:growl autoUpdate="true" life="3000" />
 		
-		<p:layout fullPage="true" widgetVar="varLayout">
-			<p:layoutUnit position="north" header="Testes gerais de JSF" size="90">
+		<p:layout fullPage="true" widgetVar="varLayout" >
+			<p:layoutUnit position="north" header="Testes gerais de JSF" size="90" styleClass="sem-bordas">
 				<p:menubar>
 					<p:submenu label="Arquivo">
 						<p:menuitem value="Novo" url="javascript:alert('Opção Novo');" />
@@ -36,24 +36,24 @@
 				
 			</p:layoutUnit>
 			
-			<p:layoutUnit position="south" size="100" collapsible="true" header="Rodapé" >
-				<p:panelGrid columns="1">
+			<p:layoutUnit position="south" size="100" collapsible="true" header="Rodapé" gutter="1" styleClass="sem-bordas">
+				<p:panelGrid columns="1" styleClass="sem-borda">
 					<p:outputLabel value="Espaço reservado para o rodapé" />
 					<p:outputLabel value="Para atualizar o pageLayout, defina um painel e os atualize independentes" />
 				</p:panelGrid>
 			</p:layoutUnit>
 			
-			<p:layoutUnit position="east" size="100" collapsible="true" header="Leste">
+			<p:layoutUnit position="east" size="100" collapsible="true" header="Leste" gutter="1" styleClass="sem-bordas">
 				<p:outputLabel value="Direita" />
 			</p:layoutUnit>
 			
-			<p:layoutUnit position="west" size="100" collapsible="true" header="Oeste">
+			<p:layoutUnit position="west" size="100" collapsible="true" header="Oeste" gutter="1" styleClass="sem-bordas">
 				<p:outputLabel value="Esquerda" />					
 			</p:layoutUnit>
 						
-			<p:layoutUnit position="center" header="Centro">
+			<p:layoutUnit position="center" gutter="1">
 				<p:layout>
-					<p:layoutUnit position="center">
+					<p:layoutUnit position="center" header="Centro do centro">
 						<h:form>
 							<p:panelGrid id="gridGeral">
 								<p:row>

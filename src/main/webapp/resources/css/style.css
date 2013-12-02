@@ -4,16 +4,22 @@
 	font-size: 90% !important;
 }
 
+.sem-bordas.ui-layout-unit,
+.sem-bordas tr, 
+.sem-bordas td {
+	border: none !important;
+}
+
 /**
 	001 - Bloco abaixo corrige a visualização de um menubar dentro de north layout
 */
 .ui-layout-north {
     z-index:20 !important;
-    overflow:visible !important;;
+    overflow:visible !important;
 }
 
 .ui-layout-north .ui-layout-unit-content {
     overflow:visible !important;
 }
 
-// Fim bloco 001
+/** Fim bloco 001 */
