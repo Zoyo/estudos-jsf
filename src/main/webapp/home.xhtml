@@ -15,71 +15,95 @@
 		<h:form id="form1">
 			<p:growl autoUpdate="true" life="3000" />
 			
-			<p:layout>
+			<p:layout fullPage="true" id="pageLayout" widgetVar="varLayout">
 				<p:layoutUnit position="north" header="Testes gerais de JSF" size="90">
 					<p:menubar>
-						<p:menuitem value="Desenvolver" url="javascript:alert('Em construção');" />
+						<p:submenu label="Arquivo">
+							<p:menuitem value="Novo" url="javascript:alert('Opção Novo');" />
+							<p:menuitem value="Abrir" url="javascript:alert('Opção Abrir');" />
+							<p:separator />
+							<p:menuitem value="Sair" url="javascript:alert('Saindo');"/>
+						</p:submenu>
 					</p:menubar>
 				</p:layoutUnit>
 				
-				<p:layoutUnit position="center">
-					<p:panelGrid id="gridGeral">
-						<p:row>
-							<p:column>
-								<p:outputLabel for="inputLatitude">Latitude: </p:outputLabel>
-							</p:column>
-							<p:column>
-								<p:inputText id="inputLatitude" required="true" value="#{myBean.latitude}" />
-							</p:column>
-						</p:row>
-			    		
-			    		<p:row>
-							<p:column>
-				            	<p:outputLabel for="inputLongitude">Longitude: </p:outputLabel>
-							</p:column>
-							<p:column>
-				            	<p:inputText id="inputLongitude" required="true" value="#{myBean.longitude}" />
-							</p:column>
-			    		</p:row>        
-			            
-			            <p:row>
-							<p:column>
-				            	<p:commandButton action="#{myBean.adicionarMarcacao()}" value="Marcar" update="@form"/>
-							</p:column>
-							<p:column>
-				            	<p:commandButton action="#{myBean.enderecoDeCasa()}" value="Minha Casa" update="@form"/>
-							</p:column>
-			            </p:row>
-			            
-			            <p:row>
-							<p:column colspan="2">
-					            <p:gmap center="-22.820492, -47.265501" 
-					                    type="roadmap" 
-					                    style="width:600px;height:400px"
-					                    id="gmapa"
-					                    model="#{myBean.simpleModel}"
-					                    widgetVar="mapa">
-					                    
-										<p:ajax event="overlaySelect" listener="#{myBean.onClickNoMarcador}" />
-										<p:ajax event="pointSelect" listener="#{myBean.capturarCoordenada}" update="gridGeral"/>
-										
-										<p:gmapInfoWindow rendered="#{myBean.overlayEhMarcador()}">
-											<p:panelGrid columns="1">
-												<p:commandButton value="Mostrar 10km de Raio" action="#{myBean.adicionaCirculo()}" update="gmapa"/>
-												<p:commandButton value="Excluir" action="#{myBean.excluirMarcador()}" update="gmapa"/>
-											</p:panelGrid>
-										</p:gmapInfoWindow>
-								</p:gmap>
-							</p:column>	            
-			            </p:row>
-			            
-			            <p:row>
-			            	<p:column colspan="2">
-			            		<p:commandButton action="#{myBean.limparMapa()}" value="Remover Marcações" update="gmapa"/>
-			            	</p:column>
-			            </p:row>
-					</p:panelGrid>			
-				</p:layoutUnit>				
+				<p:layoutUnit position="south" size="60" >
+					<p:panelGrid columns="1">
+						<p:outputLabel value="Espaço reservado para o rodapé" />
+						<p:outputLabel value="Para atualizar o pageLayout, defina um painel e os atualize independentes" />
+					</p:panelGrid>
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="east" size="100" collapsible="true" header="Leste">
+					<p:outputLabel value="Direita" />
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="west" size="100" collapsible="true" header="Oeste">
+					<p:outputLabel value="Esquerda" />					
+				</p:layoutUnit>
+							
+				<p:layoutUnit position="center" id="centerLayout">
+					<p:layout>
+						<p:layoutUnit position="center">
+							<p:panelGrid id="gridGeral">
+								<p:row>
+									<p:column>
+										<p:outputLabel for="inputLatitude">Latitude: </p:outputLabel>
+									</p:column>
+									<p:column>
+										<p:inputText id="inputLatitude" required="true" value="#{myBean.latitude}" />
+									</p:column>
+								</p:row>
+					    		
+					    		<p:row>
+									<p:column>
+						            	<p:outputLabel for="inputLongitude">Longitude: </p:outputLabel>
+									</p:column>
+									<p:column>
+						            	<p:inputText id="inputLongitude" required="true" value="#{myBean.longitude}" />
+									</p:column>
+					    		</p:row>        
+					            
+					            <p:row>
+									<p:column>
+						            	<p:commandButton action="#{myBean.adicionarMarcacao()}" value="Marcar" update="gridGeral"/>
+									</p:column>
+									<p:column>
+						            	<p:commandButton action="#{myBean.enderecoDeCasa()}" value="Minha Casa" update="gridGeral"/>
+									</p:column>
+					            </p:row>
+					            
+					            <p:row>
+									<p:column colspan="2">
+							            <p:gmap center="-22.820492, -47.265501" 
+							                    type="roadmap" 
+							                    style="width:600px;height:400px"
+							                    id="gmapa"
+							                    model="#{myBean.simpleModel}"
+							                    widgetVar="mapa">
+							                    
+												<p:ajax event="overlaySelect" listener="#{myBean.onClickNoMarcador}" />
+												<p:ajax event="pointSelect" listener="#{myBean.capturarCoordenada}" update="gridGeral"/>
+												
+												<p:gmapInfoWindow rendered="#{myBean.overlayEhMarcador()}">
+													<p:panelGrid columns="1">
+														<p:commandButton value="Mostrar 10km de Raio" action="#{myBean.adicionaCirculo()}" update="gmapa"/>
+														<p:commandButton value="Excluir" action="#{myBean.excluirMarcador()}" update="gmapa"/>
+													</p:panelGrid>
+												</p:gmapInfoWindow>
+										</p:gmap>
+									</p:column>	            
+					            </p:row>
+					            
+					            <p:row>
+					            	<p:column colspan="2">
+					            		<p:commandButton action="#{myBean.limparMapa()}" value="Remover Marcações" update="gmapa"/>
+					            	</p:column>
+					            </p:row>
+							</p:panelGrid>
+						</p:layoutUnit>			
+					</p:layout>
+				</p:layoutUnit>
 			</p:layout>			
 		</h:form>
 	</h:body>
