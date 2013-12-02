@@ -12,39 +12,49 @@
 	</h:head>
 	<h:body>
 
-		<h:form id="form1">
-			<p:growl autoUpdate="true" life="3000" />
+		<p:growl autoUpdate="true" life="3000" />
+		
+		<p:layout fullPage="true" widgetVar="varLayout">
+			<p:layoutUnit position="north" header="Testes gerais de JSF" size="90">
+				<p:menubar>
+					<p:submenu label="Arquivo">
+						<p:menuitem value="Novo" url="javascript:alert('Opção Novo');" />
+						<p:menuitem value="Abrir" url="javascript:alert('Opção Abrir');" />
+						<p:separator />
+						<p:menuitem value="Sair" url="javascript:alert('Saindo');"/>
+					</p:submenu>
+					
+					<p:submenu label="Gerenciar Layount">
+						<p:menuitem value="Tela Cheia" url="javascript:recolherTodosLayouts();" />
+						<p:menuitem value="Restaurar" url="javascript:expandirTodosLayouts();" />
+						<p:separator />
+						<p:menuitem value="Minimizar/Maximizar Esquerdo" url="javascript:varLayout.toggle('west')"/>
+						<p:menuitem value="Minimizar/Maximizar Direito" url="javascript:varLayout.toggle('east')"/>
+						<p:menuitem value="Minimizar/Maximizar Rodapé" url="javascript:varLayout.toggle('south')"/>
+					</p:submenu>
+				</p:menubar>
+				
+			</p:layoutUnit>
 			
-			<p:layout fullPage="true" id="pageLayout" widgetVar="varLayout">
-				<p:layoutUnit position="north" header="Testes gerais de JSF" size="90">
-					<p:menubar>
-						<p:submenu label="Arquivo">
-							<p:menuitem value="Novo" url="javascript:alert('Opção Novo');" />
-							<p:menuitem value="Abrir" url="javascript:alert('Opção Abrir');" />
-							<p:separator />
-							<p:menuitem value="Sair" url="javascript:alert('Saindo');"/>
-						</p:submenu>
-					</p:menubar>
-				</p:layoutUnit>
-				
-				<p:layoutUnit position="south" size="60" >
-					<p:panelGrid columns="1">
-						<p:outputLabel value="Espaço reservado para o rodapé" />
-						<p:outputLabel value="Para atualizar o pageLayout, defina um painel e os atualize independentes" />
-					</p:panelGrid>
-				</p:layoutUnit>
-				
-				<p:layoutUnit position="east" size="100" collapsible="true" header="Leste">
-					<p:outputLabel value="Direita" />
-				</p:layoutUnit>
-				
-				<p:layoutUnit position="west" size="100" collapsible="true" header="Oeste">
-					<p:outputLabel value="Esquerda" />					
-				</p:layoutUnit>
-							
-				<p:layoutUnit position="center" id="centerLayout">
-					<p:layout>
-						<p:layoutUnit position="center">
+			<p:layoutUnit position="south" size="100" collapsible="true" header="Rodapé" >
+				<p:panelGrid columns="1">
+					<p:outputLabel value="Espaço reservado para o rodapé" />
+					<p:outputLabel value="Para atualizar o pageLayout, defina um painel e os atualize independentes" />
+				</p:panelGrid>
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="east" size="100" collapsible="true" header="Leste">
+				<p:outputLabel value="Direita" />
+			</p:layoutUnit>
+			
+			<p:layoutUnit position="west" size="100" collapsible="true" header="Oeste">
+				<p:outputLabel value="Esquerda" />					
+			</p:layoutUnit>
+						
+			<p:layoutUnit position="center" header="Centro">
+				<p:layout>
+					<p:layoutUnit position="center">
+						<h:form>
 							<p:panelGrid id="gridGeral">
 								<p:row>
 									<p:column>
@@ -101,10 +111,24 @@
 					            	</p:column>
 					            </p:row>
 							</p:panelGrid>
-						</p:layoutUnit>			
-					</p:layout>
-				</p:layoutUnit>
-			</p:layout>			
-		</h:form>
+						</h:form>
+					</p:layoutUnit>			
+				</p:layout>
+			</p:layoutUnit>
+		</p:layout>			
 	</h:body>
+	
+	<script type="text/javascript">
+		function recolherTodosLayouts(){
+			varLayout.hide('west');
+			varLayout.hide('east');
+			varLayout.hide('south');
+		}
+	
+		function expandirTodosLayouts(){			
+			varLayout.show('west');
+			varLayout.show('east');
+			varLayout.show('south');
+		}
+	</script>
 </f:view>
