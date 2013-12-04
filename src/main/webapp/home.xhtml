@@ -32,6 +32,17 @@
 						<p:menuitem value="Minimizar/Maximizar Direito" url="javascript:varLayout.toggle('east')"/>
 						<p:menuitem value="Minimizar/Maximizar Rodapé" url="javascript:varLayout.toggle('south')"/>
 					</p:submenu>
+					
+					<p:submenu label="Input em menu">
+						<p:submenu label="Barra de Mensagem">
+							<p:menuitem value="Exibe/Oculta Mensagem" url="javascript:barraMensagem.toggle();" />
+						</p:submenu>
+						<p:menuitem value="Texto para Painel Direito">
+							<p:watermark for="textoPainel" value="Inserir no Painel" />
+							<p:inputText id="textoPainel" />
+							<p:commandButton value="OK" />
+						</p:menuitem>
+					</p:submenu>
 				</p:menubar>
 				
 			</p:layoutUnit>
@@ -115,7 +126,12 @@
 					</p:layoutUnit>			
 				</p:layout>
 			</p:layoutUnit>
-		</p:layout>			
+		</p:layout>
+		
+		<p:notificationBar position="bottom" widgetVar="barraMensagem" styleClass="top">
+			<h:outputText value="Mensagem de teste" />
+			<p:commandLink value="[X]" onclick="barraMensagem.hide();" style="float: right; margin-right: 20px"/>
+		</p:notificationBar>
 	</h:body>
 	
 	<script type="text/javascript">
