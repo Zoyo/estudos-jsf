@@ -11,61 +11,62 @@
 		<h:outputStylesheet name="style.css" library="css" /> 
 	</h:head>
 	<h:body>
-
-		<p:growl autoUpdate="true" life="3000" />
-		
-		<p:layout fullPage="true" widgetVar="varLayout" >
-			<p:layoutUnit position="north" header="Testes gerais de JSF" size="90" styleClass="sem-bordas">
-				<p:menubar>
-					<p:submenu label="Arquivo">
-						<p:menuitem value="Novo" url="javascript:alert('Opção Novo');" />
-						<p:menuitem value="Abrir" url="javascript:alert('Opção Abrir');" />
-						<p:separator />
-						<p:menuitem value="Sair" url="javascript:alert('Saindo');"/>
-					</p:submenu>
-					
-					<p:submenu label="Gerenciar Layount">
-						<p:menuitem value="Tela Cheia" url="javascript:recolherTodosLayouts();" />
-						<p:menuitem value="Restaurar" url="javascript:expandirTodosLayouts();" />
-						<p:separator />
-						<p:menuitem value="Minimizar/Maximizar Esquerdo" url="javascript:varLayout.toggle('west')"/>
-						<p:menuitem value="Minimizar/Maximizar Direito" url="javascript:varLayout.toggle('east')"/>
-						<p:menuitem value="Minimizar/Maximizar Rodapé" url="javascript:varLayout.toggle('south')"/>
-					</p:submenu>
-					
-					<p:submenu label="Input em menu">
-						<p:submenu label="Barra de Mensagem">
-							<p:menuitem value="Exibe/Oculta Mensagem" url="javascript:barraMensagem.toggle();" />
+		<h:form id="formPrincipal">
+			<p:growl autoUpdate="true" life="3000" />
+			
+			<p:layout fullPage="true" widgetVar="varLayout" >
+				<p:layoutUnit position="north" header="Testes gerais de JSF" size="90" styleClass="sem-bordas">
+					<p:menubar>
+						<p:submenu label="Arquivo">
+							<p:menuitem value="Novo" url="javascript:alert('Opção Novo');" />
+							<p:menuitem value="Abrir" url="javascript:alert('Opção Abrir');" />
+							<p:separator />
+							<p:menuitem value="Sair" url="javascript:alert('Saindo');"/>
 						</p:submenu>
-						<p:menuitem value="Texto para Painel Direito">
-							<p:watermark for="textoPainel" value="Inserir no Painel" />
-							<p:inputText id="textoPainel" />
-							<p:commandButton value="OK" />
-						</p:menuitem>
-					</p:submenu>
-				</p:menubar>
-				
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="south" size="100" collapsible="true" header="Rodapé" gutter="1" styleClass="sem-bordas">
-				<p:panelGrid columns="1" styleClass="sem-borda">
-					<p:outputLabel value="Espaço reservado para o rodapé" />
-					<p:outputLabel value="Para atualizar o pageLayout, defina um painel e os atualize independentes" />
-				</p:panelGrid>
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="east" size="100" collapsible="true" header="Leste" gutter="1" styleClass="sem-bordas">
-				<p:outputLabel value="Direita" />
-			</p:layoutUnit>
-			
-			<p:layoutUnit position="west" size="100" collapsible="true" header="Oeste" gutter="1" styleClass="sem-bordas">
-				<p:outputLabel value="Esquerda" />					
-			</p:layoutUnit>
 						
-			<p:layoutUnit position="center" gutter="1">
-				<p:layout>
-					<p:layoutUnit position="center" header="Centro do centro">
-						<h:form>
+						<p:submenu label="Gerenciar Layount">
+							<p:menuitem value="Tela Cheia" url="javascript:recolherTodosLayouts();" />
+							<p:menuitem value="Restaurar" url="javascript:expandirTodosLayouts();" />
+							<p:separator />
+							<p:menuitem value="Minimizar/Maximizar Esquerdo" url="javascript:varLayout.toggle('west')"/>
+							<p:menuitem value="Minimizar/Maximizar Direito" url="javascript:varLayout.toggle('east')"/>
+							<p:menuitem value="Minimizar/Maximizar Rodapé" url="javascript:varLayout.toggle('south')"/>
+						</p:submenu>
+						
+						<p:submenu label="Input em menu">
+							<p:submenu label="Barra de Mensagem">
+								<p:menuitem value="Exibe/Oculta Mensagem" url="javascript:barraMensagem.toggle();" />
+							</p:submenu>
+							<p:menuitem value="Texto para Painel Direito">
+								<p:watermark for="textoPainel" value="Inserir no Painel" />
+								<p:inputText id="textoPainel" value="#{myBean.textoPainel}" />
+								<p:commandButton value="OK" action="#{myBean.mudaTextoPainel()}" update="painelDireito" />
+							</p:menuitem>
+						</p:submenu>
+					</p:menubar>
+					
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="south" size="100" collapsible="true" header="Rodapé" gutter="1" styleClass="sem-bordas">
+					<p:panelGrid columns="1" styleClass="sem-borda">
+						<p:outputLabel value="Espaço reservado para o rodapé" />
+						<p:outputLabel value="Para atualizar o pageLayout, defina um painel e os atualize independentes" />
+					</p:panelGrid>
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="east" size="100" collapsible="true" header="Leste" gutter="1" styleClass="sem-bordas">
+					<p:panelGrid id="painelDireito" columns="1" styleClass="sem-borda">
+						<p:outputLabel value="#{myBean.textoPainel}" />
+					</p:panelGrid>
+				</p:layoutUnit>
+				
+				<p:layoutUnit position="west" size="100" collapsible="true" header="Oeste" gutter="1" styleClass="sem-bordas">
+					<p:outputLabel value="Esquerda" />					
+				</p:layoutUnit>
+							
+				<p:layoutUnit position="center" gutter="1">
+					<p:layout>
+						<p:layoutUnit position="center" header="Centro do centro">
 							<p:panelGrid id="gridGeral">
 								<p:row>
 									<p:column>
@@ -122,19 +123,39 @@
 					            	</p:column>
 					            </p:row>
 							</p:panelGrid>
-						</h:form>
-					</p:layoutUnit>			
-				</p:layout>
-			</p:layoutUnit>
-		</p:layout>
-		
-		<p:notificationBar position="bottom" widgetVar="barraMensagem" styleClass="top">
-			<h:outputText value="Mensagem de teste" />
-			<p:commandLink value="[X]" onclick="barraMensagem.hide();" style="float: right; margin-right: 20px"/>
-		</p:notificationBar>
+						</p:layoutUnit>			
+					</p:layout>
+				</p:layoutUnit>
+			</p:layout>
+			
+			<p:notificationBar position="bottom" widgetVar="barraMensagem" styleClass="top">
+				<h:outputText value="Mensagem de teste" />
+				<p:commandLink value="[X]" onclick="barraMensagem.hide();" style="float: right; margin-right: 20px"/>
+			</p:notificationBar>
+		</h:form>		
 	</h:body>
 	
 	<script type="text/javascript">
+// 		<![CDATA[
+		
+// 		O bloco marcado abaixo garante que o menu não se feche ao entrar com o foco no componente inputText que está 
+// 		dentro do menuItem. 
+	
+// 		Retirado do forum do próprio prime (http://forum.primefaces.org/viewtopic.php?f=3&t=21810)
+	
+// 		Pergunta: I'm looking for a way to embed a search in a p:menubar. It does render, but when I try to click in the inputText field, the menu collapses. Is there a way to make this work.
+// 		Resposta: Figured it out. I added the following script and changed my inputText to have an id of "textoPainel"
+// 			      mais o código abaixo
+// 		]]>		
+			
+		var linkButton = document.getElementById('formPrincipal:textoPainel');
+		linkButton.onclick = function(ev){
+			ev.preventDefault();
+			ev.stopPropagation();
+		}
+		//******************************************************
+		
+		
 		function recolherTodosLayouts(){
 			varLayout.hide('west');
 			varLayout.hide('east');

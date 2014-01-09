@@ -29,6 +29,8 @@ public class MyBean implements Serializable {
     
     private double latitude;
     private double longitude;
+    
+    private String textoPainel;
 
     public void adicionarMarcacao() {
     	LatLng coordenada = new LatLng(latitude, longitude);
@@ -89,6 +91,12 @@ public class MyBean implements Serializable {
 	public boolean overlayEhMarcador() {
 		return marcadorClicado != null && marcadorClicado instanceof Marker;
 	}
+	
+	public void mudaTextoPainel() {
+		if(textoPainel == null || textoPainel.isEmpty()) {
+			textoPainel = "Direito";
+		}
+	}
     
 //    Getter's Setter's
     public String getStr() {
@@ -125,5 +133,13 @@ public class MyBean implements Serializable {
     
     public Marker getMarcadorClicado() {
 		return marcadorClicado;
-	}    
+	}
+    
+    public String getTextoPainel() {
+		return textoPainel;
+	}
+    
+    public void setTextoPainel(String textoPainel) {
+		this.textoPainel = textoPainel;
+	}
 }
